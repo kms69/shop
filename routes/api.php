@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\EmployeesController;
+use App\Http\Controllers\Api\V1\InventoryImpController;
 use App\Http\Controllers\Api\V1\InventoryPrController;
 use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Http\Request;
@@ -33,3 +34,4 @@ Route::post('/inventory_pr', [InventoryPrController::class,'index']);
 Route::post('/inventory_pr_store', [InventoryPrController::class,'store']);
 Route::post('/inventory_pr_update/{id}', [InventoryPrController::class,'update']);
 Route::post('/inventory_pr_delete/{id}', [InventoryPrController::class,'destroy']);
+Route::post('/inventory_imp_store', [InventoryImpController::class,'store']);
