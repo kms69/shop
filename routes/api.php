@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\V1\EmployeesController;
+use App\Http\Controllers\Api\V1\InventoryPrController;
 use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +29,4 @@ Route::post('/employees', [EmployeesController::class,'index']);
 Route::post('/employees_store', [EmployeesController::class,'store']);
 Route::post('/employees_update/{id}', [EmployeesController::class,'update']);
 Route::post('/employees_delete/{id}', [EmployeesController::class,'destroy']);
+Route::post('/inventory_pr_store', [InventoryPrController::class,'store']);
