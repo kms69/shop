@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\InventoryImport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class InventoryImpController extends Controller
@@ -64,6 +65,7 @@ class InventoryImpController extends Controller
                 ->ignore($id)],
             'date_imported' => 'required|date_format:Y-m-d',
             'stock' => 'required|numeric',
+            'employee_username' => 'required|string',
         ]);
 
         $input = $request->all();

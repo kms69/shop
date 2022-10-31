@@ -34,4 +34,7 @@ Route::post('/inventory_pr', [InventoryPrController::class,'index']);
 Route::post('/inventory_pr_store', [InventoryPrController::class,'store']);
 Route::post('/inventory_pr_update/{id}', [InventoryPrController::class,'update']);
 Route::post('/inventory_pr_delete/{id}', [InventoryPrController::class,'destroy']);
+Route::post('/inventory_imp', [InventoryImpController::class,'index']);
 Route::post('/inventory_imp_store', [InventoryImpController::class,'store']);
+Route::post('/inventory_imp_update/{id}', [InventoryImpController::class,'update']);
+Route::post('/inventory_imp_delete/{id}', [InventoryImpController::class,'destroy']);
