@@ -45,18 +45,6 @@ class ProductController extends Controller
         return response(['Product' => $product, 'message' => 'Successful'], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $product = Product::findOrFail($id);
-
-        return response(['Product' => $product, 'message' => 'Successful'], 200);
-    }
 
     /**
      * Update the specified resource in storage.
