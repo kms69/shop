@@ -18,7 +18,7 @@ class EmployeesController extends Controller
     public function index(Request $request)
     {
         $id = $request->input(['id']);
-        if($id) {
+        if ($id) {
             $product = Employee::findOrFail($id);
 
             return response(['Employee' => $product, 'message' => 'Successful'], 200);
@@ -83,7 +83,7 @@ class EmployeesController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         DB::table("employees")->where('id', $id)->delete();
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\InventoryPrimary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class InventoryPrController extends Controller
 {
@@ -58,12 +60,10 @@ class InventoryPrController extends Controller
     {
         $this->validate($request, [
 
-            'name' => 'required|string|max:50',
-            'address' => 'required|string|max:1000',
-            'email' => ['required', Rule::unique('employees', 'email')
+            'name' => ['required', Rule::unique('inventory_primaries', 'name')
                 ->ignore($id)],
-            'role' => 'required|string|max:50',
-            'permission' => 'required|numeric',
+            'last_update' => 'required|date_format:Y-m-d',
+            'stock' => 'required|numeric',
         ]);
 
         $input = $request->all();
@@ -81,7 +81,7 @@ class InventoryPrController extends Controller
      */
     public function destroy( $id)
     {
-        DB::table("employees")->where('id', $id)->delete();
+        DB::table("inventory_primaries")->where('id', $id)->delete();
 
         return response()->json([
             'success' => true,

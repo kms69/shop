@@ -29,4 +29,7 @@ Route::post('/employees', [EmployeesController::class,'index']);
 Route::post('/employees_store', [EmployeesController::class,'store']);
 Route::post('/employees_update/{id}', [EmployeesController::class,'update']);
 Route::post('/employees_delete/{id}', [EmployeesController::class,'destroy']);
+Route::post('/inventory_pr', [InventoryPrController::class,'index']);
 Route::post('/inventory_pr_store', [InventoryPrController::class,'store']);
+Route::post('/inventory_pr_update/{id}', [InventoryPrController::class,'update']);
+Route::post('/inventory_pr_delete/{id}', [InventoryPrController::class,'destroy']);
