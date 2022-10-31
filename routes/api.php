@@ -24,5 +24,7 @@ Route::post('/products', [ProductController::class,'index']);
 Route::post('/products_store', [ProductController::class,'store']);
 Route::post('/products_update/{id}', [ProductController::class,'update']);
 Route::post('/products_delete/{id}', [ProductController::class,'destroy']);
+Route::post('/employees', [EmployeesController::class,'index']);
 Route::post('/employees_store', [EmployeesController::class,'store']);
-
+Route::post('/employees_update/{id}', [EmployeesController::class,'update']);
+Route::post('/employees_delete/{id}', [EmployeesController::class,'destroy']);

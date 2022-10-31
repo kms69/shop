@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class EmployeesController extends Controller
@@ -60,8 +61,13 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => ['required', Rule::unique('products', 'name')
+
+            'name' => 'required|string|max:50',
+            'address' => 'required|string|max:1000',
+            'email' => ['required', Rule::unique('employees', 'email')
                 ->ignore($id)],
+            'role' => 'required|string|max:50',
+            'permission' => 'required|numeric',
         ]);
 
         $input = $request->all();
@@ -77,15 +83,14 @@ class EmployeesController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $product)
+    public function destroy( $id)
     {
-        $product->delete();
+        DB::table("employees")->where('id', $id)->delete();
 
         return response()->json([
-            "success" => true,
-            "message" => "Employee deleted successfully.",
-            "data" => $product
-        ]);
-
+            'success' => true,
+            'message' => 'Employee Deleted successfully.'
+        ], 200);
     }
+
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
@@ -73,15 +74,14 @@ class ProductController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $product->delete();
+        DB::table("products")->where('id', $id)->delete();
 
         return response()->json([
-            "success" => true,
-            "message" => "Product deleted successfully.",
-            "data" => $product
-        ]);
+            'success' => true,
+            'message' => 'Employee Deleted successfully.'
+        ], 200);
 
     }
 }
