@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 
 class DocumentsController extends Controller
@@ -24,7 +23,7 @@ class DocumentsController extends Controller
 
             $save = new Document();
             $save->name = $name;
-            $save->file_path= $path;
+            $save->file_path = $path;
             $save->user_name = $request->input('user_name');
             $save->format = $request->input('format');
             $save->save();
@@ -32,6 +31,8 @@ class DocumentsController extends Controller
             return response(['Product' => $save, 'message' => 'Successful'], 200);
         }
     }
+
+
     /**
      * download the specified resource from storage.
      *
@@ -39,10 +40,14 @@ class DocumentsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function download($fileId){
+    public function download($fileId)
+    {
         $entry = document::where('id', '=', $fileId)->firstOrFail();
-        $pathToFile=storage_path("public/files").$entry->name;
+        $pathToFile = public_path("storage/files/") . $entry->name;
+
         return response()->download($pathToFile);
 
     }
+
+//
 }
