@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('stock');
             $table->dateTime('date_imported');
             $table->string('employee_username');
+            $table->string("description",'1000');
         });
     }
 

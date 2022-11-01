@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\V1\DocumentsController;
 use App\Http\Controllers\API\V1\EmployeesController;
 use App\Http\Controllers\Api\V1\InventoryImpController;
 use App\Http\Controllers\Api\V1\InventoryPrController;
+use App\Http\Controllers\Api\V1\ProcessDController;
+use App\Http\Controllers\Api\V1\ProcessPController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\StepController;
 use Illuminate\Http\Request;
@@ -42,4 +44,16 @@ Route::post('/inventory_imp_update/{id}', [InventoryImpController::class,'update
 Route::post('/inventory_imp_delete/{id}', [InventoryImpController::class,'destroy']);
 Route::post('/upload_document', [DocumentsController::class,'upload']);
 Route::get('/download_document/{FileId}', [DocumentsController::class,'download']);
+Route::post('/steps', [StepController::class,'index']);
 Route::post('/steps_store', [StepController::class,'store']);
+Route::post('/steps_update/{StepId}', [StepController::class,'update']);
+Route::post('/steps_delete/{StepId}', [StepController::class,'destroy']);
+Route::post('/process_pipe', [ProcessPController::class,'index']);
+Route::post('/process_pipe_store', [ProcessPController::class,'store']);
+Route::post('/process_pipe_update/{PipeId}', [ProcessPController::class,'update']);
+Route::post('/process_pipe_delete/{pipeId}', [ProcessPController::class,'destroy']);
+Route::post('/process_def', [ProcessDController::class,'index']);
+Route::post('/process_def_store', [ProcessDController::class,'store']);
+Route::post('/process_def_update/{PipeId}', [ProcessDController::class,'update']);
+Route::post('/process_def_delete/{pipeId}', [ProcessDController::class,'destroy']);
+

@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('process_definitons', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('email');
-            $table->string('role');
-            $table->integer('permission');
-            $table->string('entity');
-            $table->string('password');
-            $table->timestamps();
+            $table->string('name','500');
+            $table->string("description",'1000');
+            $table->dateTime('created_date');
+            $table->string("employee_username",'1000');
+            $table->string("steps",'1000');
+            $table->string("created_by",'1000');
+
         });
     }
 
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('process_definitons');
     }
 };

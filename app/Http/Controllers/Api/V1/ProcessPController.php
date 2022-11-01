@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Document;
-use App\Models\Step;
+use App\Models\ProcessPipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class StepController extends Controller
+class ProcessPController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,13 +18,13 @@ class StepController extends Controller
     {
         $id = $request->input(['id']);
         if ($id) {
-            $step = Step::findOrFail($id);
+            $step = ProcessPipe::findOrFail($id);
 
-            return response(['Step' => $step, 'message' => 'Successful'], 200);
+            return response(['ProcessPipe' => $step, 'message' => 'Successful'], 200);
         }
-        $steps = Step::all();
+        $steps = ProcessPipe::all();
 
-        return response(['Step' => $steps, 'message' => 'Successful'], 200);
+        return response(['ProcessPipe' => $steps, 'message' => 'Successful'], 200);
     }
 
     /**
@@ -36,13 +35,13 @@ class StepController extends Controller
      */
     public function store(Request $request)
     {
-        $step = new Step();
+        $step = new ProcessPipe();
 
-        $step->types = $request->input('types');
-        $step->fields = $request->input('fields');
-        $step->assignee = $request->input('assignee');
-        $step->created_by = $request->input('created_by');
-        $step->description = $request->input('description');
+        $step->process_id = $request->input('process_id');
+        $step->current_step = $request->input('current_step');
+        $step->deadline = $request->input('deadline');
+        $step->data = $request->input('data');
+        $step->finished = $request->input('finished');
         $step->save();
 
         if ($step) {
@@ -50,7 +49,7 @@ class StepController extends Controller
             $step->files()->sync($fileId);
         }
 
-        return response(['Step' => $step, 'message' => 'Successful'], 200);
+        return response(['ProcessPipe' => $step, 'message' => 'Successful'], 200);
     }
 
 
@@ -63,12 +62,12 @@ class StepController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $step = Step::findOrFail($id);
-        $step->types = $request->input('types');
-        $step->fields = $request->input('fields');
-        $step->assignee = $request->input('assignee');
-        $step->created_by = $request->input('created_by');
-        $step->description = $request->input('description');
+        $step = ProcessPipe::findOrFail($id);
+        $step->process_id = $request->input('process_id');
+        $step->current_step = $request->input('current_step');
+        $step->deadline = $request->input('deadline');
+        $step->data = $request->input('data');
+        $step->finished = $request->input('finished');
         $step->update();
 
         if ($step) {
@@ -76,7 +75,7 @@ class StepController extends Controller
             $step->files()->sync($fileId);
         }
 
-        return response(['Step' => $step, 'message' => 'Successful'], 200);
+        return response(['ProcessPipe' => $step, 'message' => 'Successful'], 200);
     }
 
     /**
@@ -87,11 +86,11 @@ class StepController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("steps")->where('id', $id)->delete();
+        DB::table("process_pipes")->where('id', $id)->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'Step Deleted successfully.'
+            'message' => 'ProcessPipe Deleted successfully.'
         ], 200);
     }
 }

@@ -13,16 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('process_pipes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('email');
-            $table->string('role');
-            $table->integer('permission');
-            $table->string('entity');
-            $table->string('password');
-            $table->timestamps();
+            $table->integer("process_id");
+            $table->integer("current_step");
+            $table->dateTime('deadline');
+            $table->string("data",'2000');
+            $table->enum('finished', ['1', '0'])->default('0');
+
         });
     }
 
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('process_pipes');
     }
 };

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('stock');
             $table->dateTime('last_update');
+            $table->string("description",'1000');
         });
     }
 

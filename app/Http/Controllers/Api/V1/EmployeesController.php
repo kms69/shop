@@ -45,6 +45,7 @@ class EmployeesController extends Controller
         ]);
 
         $input = $request->all();
+        $input['password'] = bcrypt($request->password);
         $product = Employee::create($input);
 
         return response(['Employee' => $product, 'message' => 'Successful'], 200);
@@ -68,6 +69,7 @@ class EmployeesController extends Controller
                 ->ignore($id)],
             'role' => 'required|string|max:50',
             'permission' => 'required|numeric',
+            'password' => 'required|confirmed'
         ]);
 
         $input = $request->all();
