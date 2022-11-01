@@ -5,6 +5,7 @@ use App\Http\Controllers\API\V1\EmployeesController;
 use App\Http\Controllers\Api\V1\InventoryImpController;
 use App\Http\Controllers\Api\V1\InventoryPrController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\StepController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,4 @@ Route::post('/inventory_imp_update/{id}', [InventoryImpController::class,'update
 Route::post('/inventory_imp_delete/{id}', [InventoryImpController::class,'destroy']);
 Route::post('/upload_document', [DocumentsController::class,'upload']);
 Route::get('/download_document/{FileId}', [DocumentsController::class,'download']);
+Route::post('/steps_store', [StepController::class,'store']);

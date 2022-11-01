@@ -9,4 +9,9 @@ class Document extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function steps()
+    {
+        return $this->morphedByMany(Step::class, 'documents');
+    }
 }

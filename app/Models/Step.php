@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Step extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
+    public function files()
+    {
+        return $this->morphToMany(Document::class, 'documents');
+    }
 }
