@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\DocumentsController;
 use App\Http\Controllers\API\V1\EmployeesController;
 use App\Http\Controllers\Api\V1\InventoryImpController;
 use App\Http\Controllers\Api\V1\InventoryPrController;
@@ -38,3 +39,4 @@ Route::post('/inventory_imp', [InventoryImpController::class,'index']);
 Route::post('/inventory_imp_store', [InventoryImpController::class,'store']);
 Route::post('/inventory_imp_update/{id}', [InventoryImpController::class,'update']);
 Route::post('/inventory_imp_delete/{id}', [InventoryImpController::class,'destroy']);
+Route::post('/upload_document', [DocumentsController::class,'upload']);

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class DocumentsController extends Controller
@@ -16,13 +18,20 @@ class DocumentsController extends Controller
      */
     public function upload(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|unique:products,name',
-        ]);
+//        $request['input']->file->store('document', 'public');
+//
+//        $document = new Document([
+//            "name" => $request->get('name'),
+//            "hash_name" =>  $request['input']->file->hashName()
+//        ]);
+//        $document->save();
+        $name = $request->file('file')->getClientOriginalName();
+        $path = $request->file('file')->storeAs('public/files', $name);
 
-        $input = $request->all();
-        $product = Product::create($input);
+        $attribute = array_merge($request->all());
+        $document = Document::create($attribute);
 
-        return response(['Product' => $product, 'message' => 'Successful'], 200);
-    }
+            return response(['Product' => $document, 'message' => 'Successful'], 200);
+        }
+
 }
