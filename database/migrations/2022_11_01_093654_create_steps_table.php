@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('steps', function (Blueprint $table) {
             $table->id();
+            $table->string("description",'1000');
+            $table->string("types",'1000');
+            $table->string("fields",'1000');
+            $table->string("assignee",'1000');
+            $table->string("created_by",'1000');
             $table->timestamps();
         });
     }
