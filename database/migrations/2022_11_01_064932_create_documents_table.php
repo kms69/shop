@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string("document_type")->nullable();
             $table->string("hash_name",'1000');
             $table->string("name",'1000');
-            $table->string("username",'1000');
+            $table->string("user_name",'1000');
             $table->string("format",'1000');
             $table->timestamps();
         });

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 
 class DocumentsController extends Controller
@@ -18,20 +17,31 @@ class DocumentsController extends Controller
      */
     public function upload(Request $request)
     {
-//        $request['input']->file->store('document', 'public');
-//
-//        $document = new Document([
-//            "name" => $request->get('name'),
-//            "hash_name" =>  $request['input']->file->hashName()
-//        ]);
-//        $document->save();
-        $name = $request->file('file')->getClientOriginalName();
-        $path = $request->file('file')->storeAs('public/files', $name);
+        if ($file = $request->file('file')) {
+            $path = md5_file($file->getRealPath());
+            $name = $file->getClientOriginalName();
 
-        $attribute = array_merge($request->all());
-        $document = Document::create($attribute);
+            $save = new Document();
+            $save->name = $name;
+            $save->hash_name = $path;
+            $save->user_name = $request->input('user_name');
+            $save->format = $request->input('format');
+            $save->save();
 
-            return response(['Product' => $document, 'message' => 'Successful'], 200);
+            return response(['Product' => $save, 'message' => 'Successful'], 200);
         }
+    }
+    /**
+     * download the specified resource from storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function download($fileId){
+        $entry = document::where('file_id', '=', $fileId)->firstOrFail();
+        $pathToFile=storage_path()."/app/".$entry->filename;
+        return response()->download($pathToFile);
 
+    }
 }

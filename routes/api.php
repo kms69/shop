@@ -40,3 +40,4 @@ Route::post('/inventory_imp_store', [InventoryImpController::class,'store']);
 Route::post('/inventory_imp_update/{id}', [InventoryImpController::class,'update']);
 Route::post('/inventory_imp_delete/{id}', [InventoryImpController::class,'destroy']);
 Route::post('/upload_document', [DocumentsController::class,'upload']);
+Route::post('/download_document/{FileId}', [DocumentsController::class,'download']);
