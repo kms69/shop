@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->integer("document_id")->nullable();
+            $table->string("document_type")->nullable();
+            $table->string("hash_name",'1000');
+            $table->string("name",'1000');
+            $table->string("username",'1000');
+            $table->string("format",'1000');
             $table->timestamps();
         });
     }
