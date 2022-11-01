@@ -44,7 +44,7 @@ class StepController extends Controller
         $step->description = $request->input('description');
         $step->save();
 
-        if($request->input('file')){
+        if($step){
             $name = $request->file('file')->getClientOriginalName();
             $path = $request->file('file')->storeAs('public/files', $name);
 
@@ -54,7 +54,7 @@ class StepController extends Controller
             $save->user_name = $request->input('user_name');
             $save->format = $request->input('format');
             $save->save();
-            $step->files()->sync($step->id);
+            $step->files()->sync($save->id);
         }
 
 

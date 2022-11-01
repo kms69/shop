@@ -12,6 +12,6 @@ class Document extends Model
 
     public function steps()
     {
-        return $this->morphedByMany(Step::class, 'documents');
+        return $this->morphedByMany(Step::class, 'uploadable');
     }
 }

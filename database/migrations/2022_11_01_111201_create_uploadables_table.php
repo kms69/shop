@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('uploadables', function (Blueprint $table) {
             $table->id();
-            $table->string("file_path",'1000');
-            $table->string("name",'1000');
-            $table->string("user_name",'1000');
-            $table->string("format",'1000');
+            $table->integer("document_id");
+            $table->integer("uploadable_id");
+            $table->string("uploadable_type");
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('uploadables');
     }
 };
