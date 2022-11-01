@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class DocumentsController extends Controller
@@ -18,12 +19,12 @@ class DocumentsController extends Controller
     public function upload(Request $request)
     {
         if ($file = $request->file('file')) {
-            $path = md5_file($file->getRealPath());
-            $name = $file->getClientOriginalName();
+            $name = $request->file('file')->getClientOriginalName();
+            $path = $request->file('file')->storeAs('public/files', $name);
 
             $save = new Document();
             $save->name = $name;
-            $save->hash_name = $path;
+            $save->file_path= $path;
             $save->user_name = $request->input('user_name');
             $save->format = $request->input('format');
             $save->save();
@@ -39,8 +40,8 @@ class DocumentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function download($fileId){
-        $entry = document::where('file_id', '=', $fileId)->firstOrFail();
-        $pathToFile=storage_path()."/app/".$entry->filename;
+        $entry = document::where('id', '=', $fileId)->firstOrFail();
+        $pathToFile=storage_path("public/files").$entry->name;
         return response()->download($pathToFile);
 
     }
