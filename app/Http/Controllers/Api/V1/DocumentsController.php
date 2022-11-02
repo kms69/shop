@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 
 class DocumentsController extends Controller
@@ -18,11 +19,12 @@ class DocumentsController extends Controller
     public function upload(Request $request)
     {
         if ($file = $request->file('file')) {
-            $name = $request->file('file')->getClientOriginalName();
+           $name = $request->file('file')->getClientOriginalName();
+            $hash_name =  Crypt::encryptString($name);
             $path = $request->file('file')->storeAs('public/files', $name);
 
             $save = new Document();
-            $save->name = $name;
+            $save->name = $hash_name;
             $save->file_path = $path;
             $save->user_name = $request->input('user_name');
             $save->format = $request->input('format');
@@ -43,7 +45,8 @@ class DocumentsController extends Controller
     public function download($fileId)
     {
         $entry = document::where('id', '=', $fileId)->firstOrFail();
-        $pathToFile = public_path("storage/files/") . $entry->name;
+        $name = Crypt::decryptString($entry->name);
+        $pathToFile = public_path("storage/files/") . $name;
 
         return response()->download($pathToFile);
 
