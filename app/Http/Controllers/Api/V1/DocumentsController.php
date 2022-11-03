@@ -19,8 +19,8 @@ class DocumentsController extends Controller
     public function upload(Request $request)
     {
         if ($file = $request->file('file')) {
-           $name = $request->file('file')->getClientOriginalName();
-            $hash_name =  Crypt::encryptString($name);
+            $name = $request->file('file')->getClientOriginalName();
+            $hash_name = Crypt::encryptString($name);
             $path = $request->file('file')->storeAs('public/files', $name);
 
             $save = new Document();
@@ -33,7 +33,6 @@ class DocumentsController extends Controller
             return response(['Product' => $save, 'message' => 'Successful'], 200);
         }
     }
-
 
     /**
      * download the specified resource from storage.
