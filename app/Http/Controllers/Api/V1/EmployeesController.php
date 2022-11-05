@@ -5,11 +5,21 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class EmployeesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:employee')->except('logout');
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +56,7 @@ class EmployeesController extends Controller
 
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
+
         $product = Employee::create($input);
 
         return response(['Employee' => $product, 'message' => 'Successful'], 200);
@@ -94,5 +105,29 @@ class EmployeesController extends Controller
             'message' => 'Employee Deleted successfully.'
         ], 200);
     }
+
+    function setEnv($name, $value)
+    {
+        $path = base_path('.env');
+        if (file_exists($path)) {
+            file_put_contents($path, str_replace(
+                $name . '=' . env($name), $name . '=' . $value, file_get_contents($path)
+            ));
+        }
+    }
+
+    public function login(Request $request)
+    {
+        if (Auth::guard('employee')
+            ->attempt($request->only(['email', 'password']))) {
+            $encrypted = Crypt::encryptString($request->email);
+
+            $this->setEnv('API_TOKEN', $encrypted);
+            return response(['message' => 'Successful', 'api_token' => $encrypted], 200);
+        }
+
+        return response(['message' => 'inalid'], 401);
+    }
+
 
 }
