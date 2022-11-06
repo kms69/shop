@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 Route::post('/employees_store', [EmployeesController::class, 'store']);
-Route::post('/employees_login', [EmployeesController::class, 'ter']);
+Route::post('/employees_login', [EmployeesController::class, 'login']);
 
 Route::group(['middleware' => ['env']], function () {
     Route::post('/products', [ProductController::class, 'index']);

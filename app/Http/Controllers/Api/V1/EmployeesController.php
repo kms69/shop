@@ -106,27 +106,30 @@ class EmployeesController extends Controller
         ], 200);
     }
 
-    function setEnv($name, $value)
+    function encrypt($string)
     {
-        $path = base_path('.env');
-        if (file_exists($path)) {
-            file_put_contents($path, str_replace(
-                $name . '=' . env($name), $name . '=' . $value, file_get_contents($path)
-            ));
-        }
+        $secret_key = $_ENV['APP_KEY'];
+        $key = openssl_digest(" $secret_key", 'SHA256', TRUE);
+        $ivlen = openssl_cipher_iv_length($cipher = "AES-128-CBC");
+        $iv = openssl_random_pseudo_bytes($ivlen);
+        $ciphertext_raw = openssl_encrypt($string, $cipher, $key, OPENSSL_RAW_DATA, $iv);
+        $hmac = hash_hmac('sha256', $ciphertext_raw, $key, true);
+        $output = base64_encode($iv . $hmac . $ciphertext_raw);
+
+        return $output;
     }
+
 
     public function login(Request $request)
     {
         if (Auth::guard('employee')
             ->attempt($request->only(['email', 'password']))) {
-            $encrypted = Crypt::encryptString($request->email);
+            $encrypted = $this->encrypt($request->email);
 
-            $this->setEnv('API_TOKEN', $encrypted);
             return response(['message' => 'Successful', 'api_token' => $encrypted], 200);
         }
 
-        return response(['message' => 'inalid'], 401);
+        return response(['message' => 'invalid email or password'], 401);
     }
 
 
